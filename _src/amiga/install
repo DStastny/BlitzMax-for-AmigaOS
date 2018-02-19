@@ -1,0 +1,42 @@
+cls
+
+echo ***********************
+echo ***** STARTING UP *****
+echo ***********************
+
+delete //bin ALL QUIET
+makedir //bin FORCE
+copy bin //bin
+
+
+echo ****************************
+echo ***** BUILDING MODULES *****
+echo ****************************
+execute rebuildmods
+
+echo ***************************
+echo ***** BUILDING MAXIDE *****
+echo ***************************
+; call rebuildide
+echo MAXIDE not working...
+
+
+echo ************************
+echo ***** BUILDING BMK *****
+echo ************************
+execute rebuildbmk
+
+echo ************************
+echo ***** BUILDING BCC *****
+echo ************************
+execute rebuildbcc
+
+echo *****************************
+echo ***** BUILDING MAKEDOCS *****
+echo *****************************
+execute rebuildmakedocs
+
+echo *****************************
+echo ***** UPDATING          *****
+echo *****************************
+//bin/makedocs

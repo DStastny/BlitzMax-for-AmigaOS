@@ -1,0 +1,2 @@
+//bin/bmk makeapp -a -t console -o //bin/docmods //src/docmods/docmods
+//bin/bmk makeapp -a -t console -o //bin/makedocs //src/makedocs/makedocs
