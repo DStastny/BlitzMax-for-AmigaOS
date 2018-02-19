@@ -1,0 +1,1 @@
+# BlitzMax for AmigaOS
