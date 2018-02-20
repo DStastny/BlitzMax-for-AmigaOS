@@ -130,12 +130,12 @@ BBGLContext *bbGLGraphicsCreateGraphics( int width,int height,int depth,int hert
 	if (_mglInit()) return 0;
 	
 	int windowed = depth ? FALSE : TRUE;
-//printf("left=%d\n",(bbSystemDesktopWidth()- width) / 2);
-//printf("top=%d\n",(bbSystemDesktopHeight()-height)/2);
 	BBGLContext *context = 0;
 	struct GLContextIFace *IGL = 0;
 	if (windowed) {
 		IGL = IMiniGL->CreateContextTags(
+			MGLCC_WindowLeft,  (bbSystemDesktopWidth()- width) / 2,         
+			MGLCC_WindowTop, (bbSystemDesktopHeight()-height)/2,         
 			MGLCC_Width,		width,
 			MGLCC_Height,		height,
 			MGLCC_Windowed,	 	TRUE,
