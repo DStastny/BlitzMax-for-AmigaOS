@@ -449,13 +449,14 @@ Function LinkApp( path$,lnk_files:TList,makelib )
 	files="INPUT("+files+")"
 ?AmigaOS4
 	cmd="g++"
-	cmd:+" -o "+CQuote( path )
-	cmd:+" "+CQuote( tmpfile )
-	cmd:+" -L"+CQuote( BlitzMaxPath()+"/lib" )
+	cmd:+" -o "+CQuote(AToU(path))
+	cmd:+" "+CQuote(AToU(tmpfile))
+	cmd:+" -L"+CQuote(AToU(BlitzMaxPath()+"/lib"))
 '	cmd:+" -lauto"
 	cmd:+" -lpthread"
 
 	For Local t$=EachIn lnk_files
+		if t.contains(":") t= AToU(t)
 		t=CQuote(t)
 		If opt_dumpbuild Or (t[..1]="-" And t[..2]<>"-l")
 			cmd:+" "+t
