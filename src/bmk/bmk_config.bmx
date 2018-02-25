@@ -68,7 +68,7 @@ cfg_platform="linux"
 ?AmigaOS4
 opt_arch="ppc"
 cfg_platform="amigaos4"
-
+Global cfg_defaultstack = 256
 ?
 
 ChangeDir LaunchDir
@@ -155,6 +155,16 @@ Function ParseConfigArgs$[]( args$[] )
 			n:+1
 			If n=args.length CmdError
 			opt_appstub=args[n]
+?AmigaOS4
+		Case "stack"
+			n:+1
+			If n=args.length CmdError
+			cfg_defaultstack = args[n].ToInt()
+			If cfg_defaultstack > 1024 or cfg_defaultstack < 64
+				Print "Invalid stack size must be between 64 and 1024"
+				CmdError
+			End If
+?
 		Default
 			CmdError
 		End Select

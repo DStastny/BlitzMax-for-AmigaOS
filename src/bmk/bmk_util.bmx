@@ -481,3 +481,22 @@ Function LinkApp( path$,lnk_files:TList,makelib )
 	If Sys( cmd ) Throw "Build Error: Failed to link "+path
 
 End Function
+
+?AmigaOS4
+Function MakeAmigaStackstub$(main$)
+	Local ss$ = String.FromInt(cfg_defaultstack * 1024)
+	Local src$ =ConcatPath(ExtractDir(RealPath(main)),".bmx/stack."+ ss+".s")
+	If FileType(src) = 0
+		ss= "$STACK:"+ss
+		Local t : TStream = WriteStream( src$ )
+		t.Writeline ".section	.rodata"
+		t.Writeline ".align 2"
+		t.Writeline ".type	min_stack, @object"
+		t.Writeline ".size	min_stack, "+(ss.length+1)
+		t.Writeline "min_stack:"
+		t.Writeline ".string ~q"+ss+"~q"
+		t.Close
+	End If
+	Return src
+End Function
+?

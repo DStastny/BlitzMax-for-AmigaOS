@@ -281,7 +281,7 @@ Function MakeSrc:TFile( src_path$,buildit )
 				EndIf
 				
 			Else
-				Throw "Unrecognized Import file type: "+imp
+				Throw "Unrecognized Import file type: in source:"+src_file.path+ " "+imp+"\n"
 			EndIf
 		Next
 	Else If Match( src_ext,"c;m;cpp;cxx;cc;mm;h;hpp;hxx;hh" )
@@ -324,7 +324,17 @@ Function MakeSrc:TFile( src_path$,buildit )
 			Select src_ext
 			Case "bmx"
 				Local opts$=bcc_opts
-				If main_file opts=" -t "+opt_apptype+opts
+				If main_file
+				?AmigaOS4
+					local ss$= MakeAmigaStackstub(src_path)
+					local of$= StripExt(ss)+".o"
+					If FileType(of) =0
+						Assemble ss,of						
+					End If
+					lnk_files.AddFirst TFile.Create( of,obj_files )
+				?
+					 opts=" -t "+opt_apptype+opts
+				End if
 			
 				CompileBMX src_path,obj_path,opts
 						
@@ -395,6 +405,7 @@ Function MakeApp:TFile( Main$,makelib )
 		app_type="bmx"
 		MakeMod "brl.blitz"
 		MakeSrc Main,True
+
 		MakeMod opt_appstub
 	Case "c","cpp","cxx","cc","mm"
 		app_type="c/c++"
