@@ -23,10 +23,11 @@ Strict
 Import "transformfunctions.bmx"
 Import "vectorfont.bmx"
 Import "sfx.bmx"
-AppTitle = "Tempest"
+Import "startup.bmx"
+
 'Setup Graphics mode
-Graphics CWidth,CHeight,24 '0 windowed  ',32 'fullscreen
-'HideMouse
+Graphics CWidth,CHeight,PickMode() 
+HideMouse
 SeedRnd(MilliSecs())
 
 
